@@ -73,7 +73,7 @@ export function Alert({
         {onDismiss && (
           <button
             onClick={onDismiss}
-            className={`ml-4 shrink-0 ${iconColors[variant]} hover:opacity-70`}
+            className={`ml-4 shrink-0 ${iconColors[variant]} hover:opacity-70 cursor-pointer`}
             aria-label="Dismiss"
           >
             <X className="h-4 w-4" />

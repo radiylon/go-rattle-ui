@@ -72,7 +72,7 @@ export default function Header() {
           </Link>
           <button
             onClick={() => setIsOpen(false)}
-            className="p-2 hover:bg-gray-100 rounded-lg"
+            className="p-2 hover:bg-gray-100 rounded-lg cursor-pointer"
             aria-label="Close menu"
           >
             <X size={24} className="text-gray-700" />
