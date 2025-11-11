@@ -77,7 +77,7 @@ export function Input({
             <button
               type="button"
               onClick={handleIncrement}
-              className="flex-1 px-2 flex items-center justify-center hover:bg-gray-100 border-r border-t border-gray-300 rounded-tr-lg focus:outline-none"
+              className="flex-1 px-2 flex items-center justify-center hover:bg-gray-100 border-r border-t border-gray-300 rounded-tr-lg focus:outline-none cursor-pointer"
               tabIndex={-1}
               aria-label="Increment"
             >
@@ -86,7 +86,7 @@ export function Input({
             <button
               type="button"
               onClick={handleDecrement}
-              className="flex-1 px-2 flex items-center justify-center hover:bg-gray-100 border-r border-b border-gray-300 rounded-br-lg focus:outline-none"
+              className="flex-1 px-2 flex items-center justify-center hover:bg-gray-100 border-r border-b border-gray-300 rounded-br-lg focus:outline-none cursor-pointer"
               tabIndex={-1}
               aria-label="Decrement"
             >

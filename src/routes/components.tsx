@@ -94,13 +94,13 @@ function ComponentsPage() {
           <h2 className="text-3xl font-medium text-gray-900 mb-6">Cards</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <Card>
-              <p className="text-gray-700">Simple card with content</p>
+              <p className="text-gray-700">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
             </Card>
             <Card
               header={<h3 className="font-semibold">Card Header</h3>}
               footer={<p className="text-sm text-gray-600">Card Footer</p>}
             >
-              <p className="text-gray-700">Card with header and footer</p>
+              <p className="text-gray-700">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
             </Card>
             <Card hover>
               <p className="text-gray-700">Hoverable card</p>
@@ -261,7 +261,7 @@ function ComponentsPage() {
               <Avatar name="Sarah Johnson" size="sm" />
               <Avatar name="Mike Chen" size="md" />
               <Avatar name="Emily Rodriguez" size="lg" />
-              <Avatar name="David Kim" />
+              <Avatar name="David Kim" size="xl" />
             </div>
           </Card>
         </section>

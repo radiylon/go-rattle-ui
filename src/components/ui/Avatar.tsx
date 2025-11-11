@@ -3,7 +3,7 @@ import type { HTMLAttributes } from 'react'
 export interface AvatarProps extends HTMLAttributes<HTMLDivElement> {
   name?: string
   src?: string
-  size?: 'sm' | 'md' | 'lg'
+  size?: 'sm' | 'md' | 'lg' | 'xl'
 }
 
 export function Avatar({
@@ -17,6 +17,7 @@ export function Avatar({
     sm: 'h-8 w-8 text-xs',
     md: 'h-10 w-10 text-sm',
     lg: 'h-12 w-12 text-base',
+    xl: 'h-16 w-16 text-lg',
   }
 
   const getInitials = (name: string) => {
