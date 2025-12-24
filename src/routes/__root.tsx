@@ -3,10 +3,11 @@ import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
 import { TanStackDevtools } from '@tanstack/react-devtools'
 
 import Header from '../components/Header'
+import { ToastProvider } from '../components/ui'
 
 export const Route = createRootRoute({
   component: () => (
-    <>
+    <ToastProvider>
       <Header />
       <Outlet />
       {!import.meta.env.PROD && (
@@ -22,6 +23,6 @@ export const Route = createRootRoute({
           ]}
         />
       )}
-    </>
+    </ToastProvider>
   ),
 })

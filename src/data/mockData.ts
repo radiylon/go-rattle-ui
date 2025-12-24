@@ -863,3 +863,166 @@ export const pipelineStats = {
   'closed-lost': 0,
 }
 
+// Sparkline trend data for metrics (7-day trend)
+export const metricSparklines = {
+  activeDeals: [18, 20, 19, 22, 21, 23, 24],
+  pipelineValue: [1.9, 2.0, 2.1, 2.0, 2.2, 2.3, 2.4],
+  atRiskDeals: [5, 6, 4, 5, 4, 4, 3],
+  avgCloseTime: [38, 36, 35, 34, 33, 32, 32],
+}
+
+// Team quota data
+export const quotaData = {
+  target: 1000000,
+  current: 847000,
+  period: 'Q4 2024',
+  startDate: '2024-10-01',
+  endDate: '2024-12-31',
+  milestones: [
+    { label: '25%', value: 0.25 },
+    { label: '50%', value: 0.5 },
+    { label: '75%', value: 0.75 },
+    { label: '100%', value: 1.0 },
+  ],
+}
+
+// Calculate leaderboard from deals
+export function calculateLeaderboard(): Array<{
+  id: string
+  name: string
+  value: number
+  subtitle: string
+  trend?: number
+  avatar?: string
+}> {
+  const ownerTotals: Record<string, { value: number; deals: number }> = {}
+
+  mockDeals.forEach((deal) => {
+    if (deal.stage === 'closed-won') {
+      if (!ownerTotals[deal.owner]) {
+        ownerTotals[deal.owner] = { value: 0, deals: 0 }
+      }
+      ownerTotals[deal.owner].value += deal.value
+      ownerTotals[deal.owner].deals += 1
+    }
+  })
+
+  // Add pipeline value for active deals (weighted by probability)
+  mockDeals.forEach((deal) => {
+    if (deal.stage !== 'closed-won' && deal.stage !== 'closed-lost') {
+      if (!ownerTotals[deal.owner]) {
+        ownerTotals[deal.owner] = { value: 0, deals: 0 }
+      }
+      ownerTotals[deal.owner].value += deal.value * (deal.probability / 100)
+      ownerTotals[deal.owner].deals += 1
+    }
+  })
+
+  return Object.entries(ownerTotals)
+    .map(([name, data], index) => ({
+      id: String(index + 1),
+      name,
+      value: Math.round(data.value),
+      subtitle: `${data.deals} deals`,
+      trend: Math.random() > 0.5 ? Math.round(Math.random() * 15) : -Math.round(Math.random() * 10),
+    }))
+    .sort((a, b) => b.value - a.value)
+}
+
+// Activity types matching the ActivityFeed component
+type ActivityType = 'deal-update' | 'stage-change' | 'note' | 'call' | 'email' | 'meeting' | 'task' | 'won' | 'lost' | 'created'
+
+// Activity items for the feed (derived from deals)
+export function getDealActivities(): Array<{
+  id: string
+  type: ActivityType
+  title: string
+  description: string
+  timestamp: string
+  user?: { name: string }
+}> {
+  const activities: Array<{
+    id: string
+    type: ActivityType
+    title: string
+    description: string
+    timestamp: string
+    user?: { name: string }
+  }> = []
+
+  mockDeals.slice(0, 8).forEach((deal, index) => {
+    if (deal.recentActivity && deal.recentActivity[0]) {
+      const activity = deal.recentActivity[0]
+      let type: ActivityType = 'deal-update'
+
+      if (activity.action.toLowerCase().includes('closed') && deal.stage === 'closed-won') {
+        type = 'won'
+      } else if (activity.action.toLowerCase().includes('created')) {
+        type = 'created'
+      } else if (activity.action.toLowerCase().includes('call')) {
+        type = 'call'
+      } else if (activity.action.toLowerCase().includes('email') || activity.action.toLowerCase().includes('sent')) {
+        type = 'email'
+      } else if (activity.action.toLowerCase().includes('meeting')) {
+        type = 'meeting'
+      } else if (activity.action.toLowerCase().includes('stage') || activity.action.toLowerCase().includes('moved')) {
+        type = 'stage-change'
+      }
+
+      activities.push({
+        id: `activity-${index}`,
+        type,
+        title: activity.action,
+        description: `${deal.name} - ${deal.company}`,
+        timestamp: activity.timestamp,
+        user: { name: activity.user },
+      })
+    }
+  })
+
+  return activities
+}
+
+// Team members for AvatarGroup
+export const teamMembers = [
+  { name: 'Sarah Johnson' },
+  { name: 'Mike Chen' },
+  { name: 'Emily Rodriguez' },
+  { name: 'David Kim' },
+  { name: 'Alex Thompson' },
+]
+
+// Featured deal for Metric component (highest probability in negotiation)
+export const featuredDeal = mockDeals.find(d => d.stage === 'negotiation' && d.probability >= 80) || mockDeals[4]
+
+// Stage distribution for SparkBar (counts per stage)
+export const stageDistribution = [
+  pipelineStats.prospecting,
+  pipelineStats.qualification,
+  pipelineStats.proposal,
+  pipelineStats.negotiation,
+  pipelineStats['closed-won'],
+  pipelineStats['closed-lost'],
+]
+
+// Quick stats for StatsList
+export const quickStats = [
+  { label: 'Open Deals', value: '18', change: { value: 12, direction: 'up' as const } },
+  { label: 'Pipeline Value', value: '$2.4M', change: { value: 8, direction: 'up' as const } },
+  { label: 'Avg Deal Size', value: '$125K' },
+  { label: 'Win Rate', value: '68%', change: { value: 3, direction: 'up' as const } },
+]
+
+// Owner options for Select dropdown
+export const ownerOptions = [...new Set(mockDeals.map(d => d.owner))].map(owner => ({
+  value: owner,
+  label: owner,
+}))
+
+// Table summary calculator
+export const getTableSummary = (deals: Deal[]) => ({
+  totalValue: deals.reduce((sum, d) => sum + d.value, 0),
+  avgProbability: deals.length > 0 ? Math.round(deals.reduce((sum, d) => sum + d.probability, 0) / deals.length) : 0,
+  count: deals.length,
+})
+
