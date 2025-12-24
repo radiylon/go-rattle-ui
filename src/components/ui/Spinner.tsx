@@ -1,6 +1,6 @@
 import type { HTMLAttributes } from "react";
 
-export interface SpinnerProps extends HTMLAttributes<HTMLDivElement> {
+export interface SpinnerProps extends HTMLAttributes<HTMLOutputElement> {
 	size?: "xs" | "sm" | "md" | "lg" | "xl";
 	color?: "primary" | "white" | "gray";
 	label?: string;

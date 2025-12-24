@@ -68,7 +68,6 @@ import {
 	calculateLeaderboard,
 	type Deal,
 	featuredDeal,
-	getDealActivities,
 	getTableSummary,
 	metricSparklines,
 	mockAlerts,
@@ -294,8 +293,6 @@ function Dashboard() {
 	// Get leaderboard data
 	const leaderboardData = useMemo(() => calculateLeaderboard(), []);
 
-	// Get activity feed data
-	const _activityData = useMemo(() => getDealActivities(), []);
 
 	// Sparkline data for each metric
 	const sparklineData = [
